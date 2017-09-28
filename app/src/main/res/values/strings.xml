@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Download</string>
+    <string name="default_text">Hey there</string>
+    <string name="download">Download</string>
+    <string name="message">Calculating your file size..</string>
+</resources>
