@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.monamagdy.download.R;
 import com.example.monamagdy.download.service.DownloadService;
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tv_message)
     TextView textFileSize;
 
+    @BindView(R.id.edt_link)
+    EditText downloadLink;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +45,14 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            startService(new Intent(this, DownloadService.class));
-            textFileSize.setText(R.string.message);
+            if(downloadLink.getText().toString().isEmpty())
+                Toast.makeText(getApplicationContext(),"Please enter your link",Toast.LENGTH_LONG).show();
+            else{
+                Intent intent = new Intent(this, DownloadService.class);
+                intent.putExtra("link_to_download",downloadLink.getText().toString());
+                startService(intent);
+                textFileSize.setText(R.string.message);
+            }
         }
     }
 
@@ -54,8 +65,14 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.b_download)
     public void onDownloadPressed(){
         if(Utils.verifyStoragePermissions(MainActivity.this)){
-            startService(new Intent(this, DownloadService.class));
+            if(downloadLink.getText().toString().isEmpty())
+                Toast.makeText(getApplicationContext(),"Please enter your link",Toast.LENGTH_LONG).show();
+            else{
+            Intent intent = new Intent(this, DownloadService.class);
+            intent.putExtra("link_to_download",downloadLink.getText().toString());
+            startService(intent);
             textFileSize.setText(R.string.message);
+            }
         }
     }
 

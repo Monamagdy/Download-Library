@@ -3,4 +3,5 @@
     <string name="default_text">Hey there</string>
     <string name="download">Download</string>
     <string name="message">Calculating your file size..</string>
+    <string name="paste_your_link">Paste your link</string>
 </resources>

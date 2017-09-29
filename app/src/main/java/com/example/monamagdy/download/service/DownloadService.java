@@ -7,7 +7,6 @@ package com.example.monamagdy.download.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 public class DownloadService extends Service {
 
@@ -15,15 +14,16 @@ public class DownloadService extends Service {
      * interface for clients that bind
      */
     IBinder mBinder;
-
+    public String fileLink;
     /**
      * The service is starting, due to a call to startService()
      */
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.d("SERVICE_START" , ":)");
-        new DownloadThread(this).execute();
+       fileLink = intent.getExtras().get("link_to_download").toString();
+        new DownloadThread(this,fileLink).execute();
 
         return START_STICKY;
     }

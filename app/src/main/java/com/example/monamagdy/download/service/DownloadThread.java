@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.monamagdy.download.R;
 import com.example.monamagdy.download.utility.DownloadConstants;
@@ -28,9 +30,11 @@ public class DownloadThread extends AsyncTask<Void, Integer, Void> {
     private int lenghtOfFile;
     private Context context;
     private float percentageDownloaded;
+    private String fileLink;
 
-    public DownloadThread(Context context) {
+    public DownloadThread(Context context, String fileLink) {
         this.context = context;
+        this.fileLink = fileLink;
     }
 
     @Override
@@ -38,8 +42,8 @@ public class DownloadThread extends AsyncTask<Void, Integer, Void> {
 
         int count;
         try {
-            String PDF = "http://download.support.xerox.com/pub/docs/FlowPort2/userdocs/any-os/en/fp_dc_setup_guide.pdf";
-            URL url = new URL(PDF);
+            URL url = new URL(fileLink);
+            Log.d("file link",fileLink);
             URLConnection connection = url.openConnection();
             connection.connect();
 
@@ -70,6 +74,7 @@ public class DownloadThread extends AsyncTask<Void, Integer, Void> {
             input.close();
 
         } catch (Exception e) {
+            Toast.makeText(context,"Please check your link",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
         return null;
