@@ -8,7 +8,6 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.monamagdy.download.R;
 import com.example.monamagdy.download.utility.DownloadConstants;
@@ -74,7 +73,6 @@ public class DownloadThread extends AsyncTask<Void, Integer, Void> {
             input.close();
 
         } catch (Exception e) {
-            Toast.makeText(context,"Please check your link",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
         return null;
